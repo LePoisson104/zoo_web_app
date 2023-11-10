@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url("IMG_7580.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #009a6a;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #006747;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+.container {
+    margin: 20px;
+    text-align: center;
+}
+.btn {
+    background-color: #009a6a;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #009a6a;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    text-align: center;
+}
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column  ;
+}
+.dropdown-content a{
+    color: white;
+    text-decoration: none;
+}
+.dropdown-content a:hover{
+    color: #A9C47F;
+}
+
+
+
+

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ticket Quantity Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #009a6a;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #006747;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      .container {
+        margin: 20px;
+        text-align: center;
+      }
+      .report-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: left;
+      }
+      .report-content h2 {
+        text-align: left;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      input[type="number"],
+      input[type="date"] {
+        width: 100%;
+        padding: 5px;
+        margin: 5px 0;
+      }
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Ticket Quantity Management</h1>
+    </header>
+    <div class="container">
+      <div class="report-content">
+        <h2>Ticket Quantities</h2>
+        <form id="ticket-management-form" action="/api/tickets" method="post">
+          <label for="adult-tickets">Adult (Ages 13-64):</label>
+          <input
+            type="number"
+            id="adult-tickets"
+            name="adult-tickets"
+            value="0"
+            min="0"
+          /><br />
+          <label for="child-tickets">Child (Ages 3-12):</label>
+          <input
+            type="number"
+            id="child-tickets"
+            name="child-tickets"
+            value="0"
+            min="0"
+          /><br />
+          <label for="senior-tickets">Senior (65+):</label>
+          <input
+            type="number"
+            id="child-tickets"
+            name="child-tickets"
+            value="0"
+            min="0"
+          /><br />
+          <label for="infant-tickets">Infant (2 & Under):</label>
+          <input
+            type="number"
+            id="child-tickets"
+            name="child-tickets"
+            value="0"
+            min="0"
+          /><br />
+          <label for="date">Date:</label>
+          <input type="date" id="date" name="date" /><br /><br />
+
+          <button type="submit" class="btn" id="update-tickets">
+            Update Ticket Quantities
+          </button>
+        </form>
+        <a href="AdminPage.html">Return to Administration main page.</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<html>
+    <head>
+        <title>Gift Shop</title>
+        <link rel = "stylesheet" href ="shop.css">
+        <!-- Icons-->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div class="navbar__container">
+                <a href="#" id="navbar__logo">ZOO</a>
+                <div class="navbar__toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="navbar__menu">
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Animals</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Attractions</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Shop</a>
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Membership</a>                    
+                    </li>
+                    <li class="navbar__item">
+                        <a href="/" class="navbar__links">Tickets</a>
+                    </li>
+                    <li class="navbar__item" id = "cart-item">
+                        <a href="#" class="navbar__button" id = "cart-button"> 
+                        <i class='bx bxs-cart-alt' id="cart-icon"></i>
+                        </a>
+                        
+                    </li>
+
+                </ul>
+ 
+                <div class="cart">
+                    <h2 class="cart-title">Your Cart</h2>
+                    <!-- Cart items go here -->
+                    <div class="cart-content">
+                        <!-- Items should be inserted here -->
+                    </div>
+                    <!-- Total and Buy Now button -->
+                    <div class="total">
+                        <span class="total-title">Total:</span>
+                        <span class="total-price">$0.00</span>
+                    </div>
+                    <button class="btn-buy">Buy Now</button>
+                    <!-- Close Cart -->
+                    <i class='bx bx-x' id="close-cart"></i>
+                </div>
+            </div>
+        </nav>
+        <div class= "banner-area">
+            <h2>Gift Shop</h2>
+        </div>
+        <div class="content-container">
+            <div class="shop-content">
+                <!--Box 1-->
+                <div class="product-box">
+                    <img src="images\tiger_plush.jpg" alt="" class="product-img">
+                    <div class="product-details">
+                        <h2 class="product-title">Tiger Plush</h2>
+                        <span class="price">$24.99</span>
+                    </div>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <!--Box 2-->
+                <div class="product-box">
+                    <img src="images/seaotter_plush.jpg" alt="" class="product-img">
+                    <div class="product-details">
+                        <h2 class="product-title">Sea Otter Plush</h2>
+                        <span class="price">$24.99</span>
+                    </div>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <!--Box 3-->
+                <div class="product-box">
+                    <img src="images/girraffe_plush.jpg" alt="" class="product-img">
+                    <div class="product-details">
+                        <h2 class="product-title">Giraffe Plush</h2>
+                        <span class="price">$24.99</span>
+                    </div>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <!--Box 4-->
+                <div class="product-box">
+                    <img src="images/zoo_apparel.jpg" alt="" class="product-img">
+                    <div class="product-details">
+                        <h2 class="product-title">Lets Get Wild Shirt</h2>
+                        <span class="price">$20.45</span>
+                    </div>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <!--Box 5-->
+                <div class="product-box">
+                    <img src="images/apparel_2.jpg" alt="" class="product-img">
+                    <div class="product-details">
+                        <h2 class="product-title">Rare Animals Shirt</h2>
+                        <span class="price">$20.45</span>
+                    </div>
+                    <button class="add-to-cart-button">Add to Cart</button>
+                </div>
+                <!--Box 6-->
+                <div class="product-box">
+                    <img src="images/Lion_hat.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Lion Cap Hat</h2>
+                            <span class="price">$10.15</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                <!--Box 7-->
+                <div class="product-box">
+                    <img src="images/Rhino_kidshat.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Rhino Kids Cap</h2>
+                            <span class="price">$10.15</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                <!--Box 8-->
+                <div class="product-box">
+                    <img src="images/Coffe_mug.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Coffee Mug</h2>
+                            <span class="price">$8.25</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+
+                <!--Box 9-->
+                <div class="product-box">
+                    <img src="images/puzzle.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Kids Puzzle</h2>
+                            <span class="price">$15.99</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                <!--Box 10-->
+                <div class="product-box">
+                    <img src="images/ColoringBook.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Coloring Book</h2>
+                            <span class="price">$12.95</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                <!--Box 11-->
+                <div class="product-box">
+                    <img src="images/StoriesBook.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Stories Book</h2>
+                            <span class="price">$10.15</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+                <!--Box 12-->
+                <div class="product-box">
+                    <img src="images/Sealife_magnets.jpg" alt="" class="product-img">
+                        <div class="product-details">
+                            <h2 class="product-title">Sea Life Magnets</h2>
+                            <span class="price">$8.50</span>
+                        </div>
+                        <button class="add-to-cart-button">Add to Cart</button>
+                    </div>
+            </div>
+        </div>
+     <!--Link to JS-->   
+     <script src="script.js"></script>
+    </body>
+    <footer>
+        <div class="footer_container">
+            <div class="footer_items">
+                <h2><a href="#" class="about-us">About Us</a></h2>
+                <div class="social_media">
+                    <a href="https://www.facebook.com/houstonzoo" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer_items">
+                <h2>University of Houston</h2>
+                <p>4800 Calhoun Rd.</p>
+                <p>Houston, TX</p>
+            </div>
+            <div class="footer_items">
+                <h2>Team Members:</h2>
+                <p>Viet Pham</p>
+                <p>Khuong Ngo</p>
+                <p>Erica Hay</p>
+                <p>Kenia Benitez</p>
+                <p>Nicole Ospina</p>
+                <p>Ryan De Luna</p>
+            </div>
+        </div>
+      </footer>
+</html>
+<!--https://www.youtube.com/watch?v=18Jvyp60Vbg-->

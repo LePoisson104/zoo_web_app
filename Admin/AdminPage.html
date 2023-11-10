@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Admin Page</title>
+  <link rel="stylesheet" href="adminPage.css">
+</head>
+
+<body>
+  <header>
+    <h1>Admin Page</h1>
+  </header>
+  <div class="container">
+    <h2>Zoo Management</h2>
+    <div class="dropdown">
+      <button class="btn" onclick="animalClicked()" title="Animals">
+        Animals
+      </button>
+      <div class="dropdown-content">
+        <a href="Animals.html">View Animals</a>
+        <a href="Animals.html">Add Animals</a>
+        <a href="Animals.html">Edit Animals</a>
+        <a href="Animals.html">Delete Animals</a>
+      </div>
+    </div>
+    <a href="RevenueReport.html">
+      <button class="btn">Revenue Report</button>
+    </a>
+    <a href="PerformanceReport.html">
+      <button class="btn">Performance Report</button>
+    </a>
+    <a href="RegularReport.html">
+      <button class="btn">Regular Report</button>
+    </a>
+    <div class="dropdown">
+      <button class="btn" onclick="ticketsAdminClicked()" title=" Tickets">
+        Tickets
+      </button>
+      <div class="dropdown-content">
+        <a href="/Admin/Tickets.html">Manage Tickets</a>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
