@@ -7,7 +7,7 @@
 // add feature in edit, when user click edit pull data from that row into the form
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://localhost:3000/admin/getall_enclosure_report")
+  fetch("http://localhost:3100/admin/getall_enclosure_report")
     .then((response) => response.json())
     .then((data) => load_report_table(data["data"]));
 });

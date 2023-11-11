@@ -141,6 +141,74 @@ class dbService {
       console.log(error);
     }
   }
+  async authenticateUser(username, password) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT username, role FROM login WHERE username = ? AND password = ?;";
+        connection.query(query, [username, password], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async user_register(username, password, role) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO login (username, password, role) VALUES (?,?,?);";
+        connection.query(query, [username, password, role], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.insertId);
+        });
+      });
+      return response === 0 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async checkUsernameExists(username) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT COUNT(*) as count FROM login WHERE username = ?;";
+        connection.query(query, [username], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result[0].count > 0);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async get_animal_by_id(id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT image, animal_name as name, species, enclosure, age, gender, weight FROM animals WHERE animal_id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = dbService;

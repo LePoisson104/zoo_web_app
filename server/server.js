@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = 3000;
+const port = 3100;
 const dbService = require("./db");
 
 app.use(cors());
@@ -44,6 +44,15 @@ app.get("/admin/getall_enclosure_report", (request, response) => {
     .then((data) => response.json({ data: data }))
     .catch((err) => console.log(err));
 });
+app.get("/admin/get_animal_by_id/:id", (req, res) => {
+  const { id } = req.params;
+  const db = dbService.getDbServiceInstance();
+  const results = db.get_animal_by_id(id);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
 //update
 app.patch("/admin/update_animal", (request, response) => {
   const db = dbService.getDbServiceInstance();
@@ -76,6 +85,49 @@ app.delete("/admin/delete_animal_row/:id", (request, response) => {
   result
     .then((data) => response.json({ success: data }))
     .catch((err) => console.log(err));
+});
+
+// Login
+app.post("/api/login", (req, res) => {
+  const { username, password } = req.body;
+  const db = dbService.getDbServiceInstance();
+  const results = db.authenticateUser(username, password);
+
+  results
+    .then((data) => {
+      if (data.length === 0)
+        throw new Error("Username or password does not match");
+      return res.json({ data });
+    })
+    .catch((err) => {
+      return res.status(401).json({ message: err.message });
+    });
+});
+app.post("/user/register", async (req, res) => {
+  const { username, password, role } = req.body;
+  const db = dbService.getDbServiceInstance();
+
+  try {
+    const usernameExists = await db.checkUsernameExists(username);
+
+    if (usernameExists) {
+      // Username already exists, handle accordingly
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    const registrationResult = await db.user_register(username, password, role);
+
+    if (registrationResult) {
+      // Registration successful
+      return res.status(200).json({ message: "User registered successfully" });
+    } else {
+      // Registration failed
+      return res.status(500).json({ message: "User registration failed" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 app.listen(port, () => {

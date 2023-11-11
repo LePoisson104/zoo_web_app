@@ -1,9 +1,14 @@
 // const { json } = require("body-parser");
-
+const front_end_url = "http://127.0.0.1:5500";
+const back_end_url = "http://localhost:3100";
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("http://localhost:3000/admin/animaltable")
-    .then((response) => response.json())
-    .then((data) => load_animal_table(data["data"]));
+  let role = window.localStorage.getItem("role");
+  if (role === undefined || role != 2)
+    window.location.replace(front_end_url + "/Login/login.html");
+  else
+    fetch(back_end_url + "/admin/animaltable")
+      .then((response) => response.json())
+      .then((data) => load_animal_table(data["data"]));
 });
 
 let aleart_success = document.getElementById("aleart_success");
@@ -22,7 +27,7 @@ document
       jsonObject[key] = value;
     });
     // console.log(jsonObject);
-    fetch("http://localhost:3000/admin/insert", {
+    fetch(back_end_url + "/admin/insert", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -90,7 +95,7 @@ function load_animal_table(data) {
   }) {
     animal_table += "<tr>";
     animal_table += `<td>${animal_id}</td>`;
-    animal_table += `<td><img style="width: 5rem; height: 5rem;" src="${image}" alt="picture of the animal"></td>`;
+    animal_table += `<td><img class="animal_table_image" src="${image}" alt="picture of the animal"></td>`;
     animal_table += `<td>${animal_name}</td>`;
     animal_table += `<td>${species}</td>`;
     animal_table += `<td>${enclosure}</td>`;
@@ -104,18 +109,36 @@ function load_animal_table(data) {
   table.innerHTML = animal_table;
 }
 //update animal
+async function load_animal_by_id(id) {
+  const res = await fetch(back_end_url + "/admin/get_animal_by_id/" + id, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  let data = await res.json();
+  let animal = data.data[0];
+  console.log(animal);
+  const form = document.querySelector("#animal_update_info_form");
+  let elements = Array.from(form.elements);
+  for (let element of elements) {
+    if (animal[element.name]) element.value = animal[element.name];
+  }
+}
+
 function edit_animal(object) {
   const id = object.getAttribute("data-id");
   const updateSection = document.querySelector("#update_form");
   const inputSection = document.querySelector("#input_form");
   inputSection.hidden = true;
   updateSection.hidden = false;
+  load_animal_by_id(id);
 
   document
     .getElementById("animal_update_info_form")
     .addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent the default form submission
-
       const form = document.getElementById("animal_update_info_form");
       const formData = new FormData(form);
       // Convert the form data to a JSON object
@@ -124,8 +147,7 @@ function edit_animal(object) {
         jsonObject[key] = value;
       });
       jsonObject.id = id;
-
-      fetch("http://localhost:3000/admin/update_animal", {
+      fetch(back_end_url + "/admin/update_animal", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -157,7 +179,7 @@ function cancel_update() {
 function deleteAnimalRow(object) {
   let id = object.getAttribute("data-id");
   //   console.log(id);
-  fetch("http://localhost:3000/admin/delete_animal_row/" + id, {
+  fetch(back_end_url + "/admin/delete_animal_row/" + id, {
     method: "DELETE",
   })
     .then((response) => response.json())

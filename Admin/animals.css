@@ -126,10 +126,7 @@ td {
   border-radius: 10px;
 }
 .form_container {
-  max-width: 700px;
-  width: 100%;
-  margin-left: 31.8%;
-  margin-top: 50px;
+  width: 700px;
   padding: 25px 30px;
   border-radius: 5px;
   background-color: white;
@@ -193,12 +190,25 @@ span {
   font-size: 14px;
   font-weight: 500;
 }
+main {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
 select {
   width: 110px;
   height: 30px;
   border-radius: 5px;
   text-align: center;
 }
+
+.animal_table_image {
+  width: 8rem;
+  height: 6rem;
+  object-fit: cover;
+}
+
 /* footer css */
 .footer_container {
   display: flex;
