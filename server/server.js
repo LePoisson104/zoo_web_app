@@ -12,12 +12,14 @@ app.use(express.urlencoded({ extended: false }));
 //create
 app.post("/admin/insert", (request, response) => {
   const db = dbService.getDbServiceInstance();
-  const { image, name, species, enclosure, age, gender, weight } = request.body;
+  const { image, name, species, enclosure, enclosure_id, age, gender, weight } =
+    request.body;
   const result = db.insertNewAnimal(
     image,
     name,
     species,
     enclosure,
+    enclosure_id,
     age,
     gender,
     weight
@@ -48,6 +50,15 @@ app.get("/admin/get_animal_by_id/:id", (req, res) => {
   const { id } = req.params;
   const db = dbService.getDbServiceInstance();
   const results = db.get_animal_by_id(id);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/admin/load_animal_by_enclosure/:id", (req, res) => {
+  const { id } = req.params;
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_animal_by_enclosure(id);
 
   results
     .then((data) => res.json({ data: data }))

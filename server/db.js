@@ -42,14 +42,23 @@ class dbService {
     }
   }
   //insert new animal into database
-  async insertNewAnimal(image, name, species, enclosure, age, gender, weight) {
+  async insertNewAnimal(
+    image,
+    name,
+    species,
+    enclosure,
+    enclosure_id,
+    age,
+    gender,
+    weight
+  ) {
     try {
       const insertId = await new Promise((resolve, reject) => {
         const query =
-          "INSERT INTO animals (image, animal_name, species, enclosure, age, gender, weight) VALUES (?,?,?,?,?,?,?);";
+          "INSERT INTO animals (image, animal_name, species, enclosure, enclosure_id, age, gender, weight) VALUES (?,?,?,?,?,?,?,?);";
         connection.query(
           query,
-          [image, name, species, enclosure, age, gender, weight],
+          [image, name, species, enclosure, enclosure_id, age, gender, weight],
           (err, result) => {
             if (err) reject(new Error(err.message));
             resolve(result.insertId);
@@ -195,6 +204,26 @@ class dbService {
       const response = await new Promise((resolve, reject) => {
         const query =
           "SELECT image, animal_name as name, species, enclosure, age, gender, weight FROM animals WHERE animal_id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async load_animal_by_enclosure(id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT animal_id, image, animal_name, species, enclosure, age, gender, weight FROM animals WHERE enclosure_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
             reject(new Error(err, message));

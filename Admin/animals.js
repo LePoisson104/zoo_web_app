@@ -1,4 +1,3 @@
-// const { json } = require("body-parser");
 const front_end_url = "http://127.0.0.1:5500";
 const back_end_url = "http://localhost:3100";
 document.addEventListener("DOMContentLoaded", function () {
@@ -26,7 +25,18 @@ document
     formData.forEach((value, key) => {
       jsonObject[key] = value;
     });
-    // console.log(jsonObject);
+    if (jsonObject.enclosure === "Lion Habitat") {
+      jsonObject.enclosure_id = 100;
+    } else if (jsonObject.enclosure === "Elephant Zone") {
+      jsonObject.enclosure_id = 101;
+    } else if (jsonObject.enclosure === "Giraffe Exhibit") {
+      jsonObject.enclosure_id = 102;
+    } else if (jsonObject.enclosure === "Bird Aviary") {
+      jsonObject.enclosure_id = 103;
+    } else if (jsonObject.enclosure === "Jungle Cat") {
+      jsonObject.enclosure_id = 104;
+    }
+
     fetch(back_end_url + "/admin/insert", {
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +129,7 @@ async function load_animal_by_id(id) {
 
   let data = await res.json();
   let animal = data.data[0];
-  console.log(animal);
+  // console.log(animal);
   const form = document.querySelector("#animal_update_info_form");
   let elements = Array.from(form.elements);
   for (let element of elements) {
