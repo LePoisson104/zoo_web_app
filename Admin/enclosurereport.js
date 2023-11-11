@@ -76,64 +76,6 @@ function load_report_table(data) {
   table.innerHTML = animal_table;
 }
 
-// function show_report() {
-//   const selectedValue = document.getElementById("enclosure_type").value;
-//   const all_enclosure = document.querySelector("#all_enclosure");
-//   const lion_habitat = document.querySelector("#lion_habitat");
-//   const elephant_zone = document.querySelector("#elephant_zone");
-//   const giraffe_exhibit = document.querySelector("#giraffe_exhibit");
-//   const bird_aviary = document.querySelector("#bird_aviary");
-
-//   //show section
-//   if (selectedValue === "all_enclosure") {
-//     all_enclosure.hidden = false;
-//     lion_habitat.hidden = true;
-//     elephant_zone.hidden = true;
-//     giraffe_exhibit.hidden = true;
-//     bird_aviary.hidden = true;
-//     jungle_cat.hidden = true;
-//   } else if (selectedValue === "lion_habitat") {
-//     all_enclosure.hidden = true;
-//     lion_habitat.hidden = false;
-//     elephant_zone.hidden = true;
-//     giraffe_exhibit.hidden = true;
-//     bird_aviary.hidden = true;
-//     jungle_cat.hidden = true;
-//     load_animal_by_enclosure(100);
-//   } else if (selectedValue === "elephant_zone") {
-//     all_enclosure.hidden = true;
-//     lion_habitat.hidden = true;
-//     elephant_zone.hidden = false;
-//     giraffe_exhibit.hidden = true;
-//     bird_aviary.hidden = true;
-//     jungle_cat.hidden = true;
-//     load_animal_by_enclosure(101);
-//   } else if (selectedValue === "giraffe_exhibit") {
-//     all_enclosure.hidden = true;
-//     lion_habitat.hidden = true;
-//     elephant_zone.hidden = true;
-//     giraffe_exhibit.hidden = false;
-//     bird_aviary.hidden = true;
-//     jungle_cat.hidden = true;
-//     load_animal_by_enclosure(102);
-//   } else if (selectedValue === "bird_aviary") {
-//     all_enclosure.hidden = true;
-//     lion_habitat.hidden = true;
-//     elephant_zone.hidden = true;
-//     giraffe_exhibit.hidden = true;
-//     bird_aviary.hidden = false;
-//     jungle_cat.hidden = true;
-//     load_animal_by_enclosure(103);
-//   } else if (selectedValue === "jungle_cat") {
-//     all_enclosure.hidden = true;
-//     lion_habitat.hidden = true;
-//     elephant_zone.hidden = true;
-//     giraffe_exhibit.hidden = true;
-//     bird_aviary.hidden = true;
-//     jungle_cat.hidden = false;
-//     load_animal_by_enclosure(104);
-//   }
-// }
 function show_report() {
   const selectedValue = document.getElementById("enclosure_type").value;
 
