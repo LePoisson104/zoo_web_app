@@ -238,6 +238,134 @@ class dbService {
       console.log(error);
     }
   }
+
+  async load_memberships() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM memberships WHERE membership_id != 1";
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //insert new membership for user
+  async insert_customer_info({
+    first_name,
+    last_name,
+    phone_number,
+    email,
+    address,
+    membership_id,
+    city,
+    state,
+    zipcode,
+  }) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO customers (first_name, last_name, phone_number, address, membership_id, city, state, zipcode ) values (?,?,?,?,?,?,?,?) WHERE email = ?;";
+
+        connection.query(
+          query,
+          [
+            first_name,
+            last_name,
+            phone_number,
+            address,
+            membership_id,
+            city,
+            state,
+            zipcode,
+            email,
+          ],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result);
+          }
+        );
+      });
+
+      return response === 0 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async get_customer_info(email) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM customers WHERE email = ?";
+        connection.query(query, [email], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async update_cus_membership(email, membership_id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "UPDATE customers SET membership_id = ? WHERE email = ?";
+
+        connection.query(query, [membership_id, email], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async insert_into_purchase_history(
+    customer_id,
+    date_of_purchase,
+    item_id,
+    quantity,
+    amount
+  ) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO purchase_history (customer_id, date_of_purchase, item_id, quantity, amount ) values (?,?,?,?,?);";
+
+        connection.query(
+          query,
+          [customer_id, date_of_purchase, item_id, quantity, amount],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result);
+          }
+        );
+      });
+
+      return response.affectedRows === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 module.exports = dbService;

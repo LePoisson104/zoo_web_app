@@ -4,13 +4,18 @@
 // add trigger if animal not suppose to be in the wrong exhibit
 const front_end_url = "http://127.0.0.1:5500";
 const back_end_url = "http://localhost:3100";
+
 document.addEventListener("DOMContentLoaded", function () {
+  load_all_enclosure();
+});
+
+function load_all_enclosure() {
   fetch(back_end_url + "/admin/getall_enclosure_report")
     .then((response) => response.json())
     .then((data) => load_report_table(data["data"]));
-});
+}
 
-function load_animal_by_enclosure(id) {
+function load_animal_by_enclosure(id, element) {
   fetch(back_end_url + "/admin/load_animal_by_enclosure/" + id, {
     headers: {
       "Content-Type": "application/json",
@@ -18,18 +23,22 @@ function load_animal_by_enclosure(id) {
     method: "GET",
   })
     .then((response) => response.json())
-    .then((data) => load_table_by_enclosure(data["data"]));
+    .then((data) => load_table_by_enclosure(data["data"], element));
 }
 
-function load_table_by_enclosure(data) {
-  const table = document.querySelector("table tbody");
+function load_table_by_enclosure(data, element) {
   let animal_table = "";
+  console.log(element);
+  let table = element
+    .getElementsByTagName("table")[0]
+    .getElementsByTagName("tbody")[0];
 
   if (data.length === 0) {
     //insert no data table when there is no data
     table.innerHTML = "<tr><td class='no_data' colspan='10'>NO DATA</td></tr>";
     return;
   }
+
   data.forEach(function ({
     animal_id,
     image,
@@ -42,7 +51,7 @@ function load_table_by_enclosure(data) {
   }) {
     animal_table += "<tr>";
     animal_table += `<td>${animal_id}</td>`;
-    animal_table += `<td><img style="width=3rem, height = 3rem" class="animal_table_image" src="${image}" alt="picture of the animal"></td>`;
+    animal_table += `<td><img style="width: 5rem; height: 5rem;"" class="animal_table_image" src="${image}" alt="picture of the animal"></td>`;
     animal_table += `<td>${animal_name}</td>`;
     animal_table += `<td>${species}</td>`;
     animal_table += `<td>${enclosure}</td>`;
@@ -54,6 +63,7 @@ function load_table_by_enclosure(data) {
   table.innerHTML = animal_table;
 }
 
+// All enclosure
 function load_report_table(data) {
   const table = document.querySelector("table tbody");
   let animal_table = "";
@@ -78,31 +88,30 @@ function load_report_table(data) {
 
 function show_report() {
   const selectedValue = document.getElementById("enclosure_type").value;
-
   const enclosures = {
     all_enclosure: {
       element: document.querySelector("#all_enclosure"),
-      // animalId: null,
+      id: null,
     },
     lion_habitat: {
       element: document.querySelector("#lion_habitat"),
-      // animalId: 100,
+      id: 100,
     },
     elephant_zone: {
       element: document.querySelector("#elephant_zone"),
-      // animalId: 101,
+      id: 101,
     },
     giraffe_exhibit: {
       element: document.querySelector("#giraffe_exhibit"),
-      // animalId: 102,
+      id: 102,
     },
     bird_aviary: {
       element: document.querySelector("#bird_aviary"),
-      // animalId: 103,
+      id: 103,
     },
     jungle_cat: {
       element: document.querySelector("#jungle_cat"),
-      // animalId: 104,
+      id: 104,
     },
   };
 
@@ -115,6 +124,8 @@ function show_report() {
   const selectedEnclosure = enclosures[selectedValue];
   if (selectedEnclosure) {
     selectedEnclosure.element.hidden = false;
-    // load_animal_by_enclosure(selectedEnclosure.animalId);
+    if (selectedEnclosure.id != null)
+      load_animal_by_enclosure(selectedEnclosure.id, selectedEnclosure.element);
+    else load_all_enclosure();
   }
 }

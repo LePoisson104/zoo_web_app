@@ -30,6 +30,39 @@ app.post("/admin/insert", (request, response) => {
     .then((data) => response.json({ data: data }))
     .catch((err) => console.log(err));
 });
+app.post("/user/insert_customer_info", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { first_name, last_name, phone_number, address, city, state, zipcode } =
+    req.body;
+  const result = db.insert_customer_info(
+    first_name,
+    last_name,
+    phone_number,
+    address,
+    city,
+    state,
+    zipcode
+  );
+
+  result
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+app.post("/user/insert_into_purchase_history", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { customer_id, date_of_purchase, item_id, quantity, amount } = req.body;
+  const result = db.insert_into_purchase_history(
+    customer_id,
+    date_of_purchase,
+    item_id,
+    quantity,
+    amount
+  );
+
+  result
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
 //get
 app.get("/admin/animaltable", (request, response) => {
   const db = dbService.getDbServiceInstance();
@@ -64,6 +97,23 @@ app.get("/admin/load_animal_by_enclosure/:id", (req, res) => {
     .then((data) => res.json({ data: data }))
     .catch((err) => console.log(err));
 });
+app.get("/user/load_memberships", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_memberships();
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/user/get_customer_info/:email", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { email } = req.params;
+  const results = db.get_customer_info(email);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
 //update
 app.patch("/admin/update_animal", (request, response) => {
   const db = dbService.getDbServiceInstance();
@@ -85,6 +135,18 @@ app.patch("/admin/update_animal", (request, response) => {
     .then((data) => response.json({ success: data }))
     .catch((err) => console.log(err));
 });
+
+app.patch("/user/update_cus_membership", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { email, membership_id } = req.body;
+  const result = db.update_cus_membership(email, membership_id);
+
+  result
+    //send this data back to the front end
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+
 //delete
 app.delete("/admin/delete_animal_row/:id", (request, response) => {
   // get id from this prams "admin/delete_animal_row/:id"
