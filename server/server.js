@@ -50,17 +50,30 @@ app.post("/user/insert_customer_info", (req, res) => {
 });
 app.post("/user/insert_into_purchase_history", (req, res) => {
   const db = dbService.getDbServiceInstance();
-  const { customer_id, date_of_purchase, item_id, quantity, amount } = req.body;
-  const result = db.insert_into_purchase_history(
+  const {
     customer_id,
     date_of_purchase,
     item_id,
     quantity,
-    amount
-  );
+    amount,
+    update_quantity,
+  } = req.body;
 
-  result
-    .then((data) => res.json({ success: data }))
+  // Use Promise.all to wait for both promises to resolve
+  Promise.all([
+    db.insert_into_purchase_history(
+      customer_id,
+      date_of_purchase,
+      item_id,
+      quantity,
+      amount
+    ),
+    db.update_inventory_quantity(update_quantity, item_id),
+  ])
+    .then(([purchaseResult, inventoryResult]) => {
+      // Send a combined response
+      res.json({ success: { purchaseResult, inventoryResult } });
+    })
     .catch((err) => console.log(err));
 });
 //get
@@ -109,6 +122,14 @@ app.get("/user/get_customer_info/:email", (req, res) => {
   const db = dbService.getDbServiceInstance();
   const { email } = req.params;
   const results = db.get_customer_info(email);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/user/load_shop_items", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_shop_items();
 
   results
     .then((data) => res.json({ data: data }))

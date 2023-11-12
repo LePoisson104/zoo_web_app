@@ -77,7 +77,7 @@ function close_modal() {
 let select_member_ship;
 function active_membership(object) {
   let role = window.localStorage.getItem("role");
-  console.log(role);
+  // console.log(role);
   if (role === null) {
     alert("Please login");
     return;

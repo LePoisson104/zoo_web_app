@@ -154,7 +154,7 @@ class dbService {
     try {
       const response = await new Promise((resolve, reject) => {
         const query =
-          "SELECT username, role FROM login WHERE username = ? AND password = ?;";
+          "SELECT username, role, customer_id FROM login INNER JOIN customers ON username = email WHERE username = ? AND password = ?;";
         connection.query(query, [username, password], (err, result) => {
           if (err) reject(new Error(err.message));
           resolve(result);
@@ -361,6 +361,43 @@ class dbService {
       });
 
       return response.affectedRows === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async load_shop_items() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM inventory;";
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async update_inventory_quantity(update_quantity, item_id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "UPDATE inventory SET quantity = ? WHERE item_id = ?";
+
+        connection.query(query, [update_quantity, item_id], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
     } catch (error) {
       console.log(error);
       return false;

@@ -36,9 +36,10 @@ document
         })
         .then((data) => {
           log_error.innerText = "";
-          let { username, role } = data.data[0];
+          let { username, role, customer_id } = data.data[0];
           window.localStorage.setItem("role", role);
           window.localStorage.setItem("username", username);
+          window.localStorage.setItem("customer_id", customer_id);
           if (role === 2)
             window.location.replace(front_end_url + "/Admin/animals.html");
           else window.location.replace(front_end_url + "/Main/main.html");

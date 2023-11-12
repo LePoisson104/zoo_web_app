@@ -132,11 +132,29 @@ a {
 }
 .cart-box {
   display: grid;
+  position: relative;
   grid-template-columns: 32% 50% 18%;
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
 }
+
+.sold-out {
+  overflow: hidden;
+}
+
+.sold-out::before {
+  content: "SOLD OUT";
+  position: absolute;
+  top: 2rem;
+  left: 6.5rem;
+  background-color: rgb(181, 0, 0);
+  color: white;
+  padding-block: 0.4rem;
+  width: 10.6rem;
+  rotate: calc(45deg);
+}
+
 .cart-img {
   max-width: 100px; /* Set the maximum width you desire */
   max-height: 100px;
@@ -332,8 +350,9 @@ a {
   font-size: 19px;
   margin-bottom: 10px;
 }
+
+.disabled-btn,
 .add-to-cart-button {
-  background: #006747;
   color: white;
   padding: 10px;
   width: 100%;
@@ -342,9 +361,19 @@ a {
   font-size: 15px;
   border-radius: 10px;
 }
+
+.add-to-cart-button {
+  background: #006747;
+}
+
+.disabled-btn {
+  background-color: gray;
+}
+
 .add-to-cart-button:hover {
   background-color: #009a6a;
 }
+
 /* footer css */
 
 .footer_container {
