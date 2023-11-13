@@ -403,6 +403,34 @@ class dbService {
       return false;
     }
   }
+
+  async insert_into_ticket(
+    customer_id,
+    ticket_type,
+    quantity,
+    price,
+    purchase_date
+  ) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO ticket_inventory (customer_id, ticket_type, quantity, price, purchase_date) VALUES (?,?,?,?,?)";
+
+        connection.query(
+          query,
+          [customer_id, ticket_type, quantity, price, purchase_date],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result);
+          }
+        );
+      });
+      return response.affectedRows === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 module.exports = dbService;

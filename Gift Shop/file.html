@@ -46,9 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/Login/login.html">
-                        <button class="login-button">Login</button>
-                    </a>
+                    <a href="/Login/login.html" class="navbar__links b" id="login_btn">Login</a>
                 </li>
 
             </ul>
@@ -63,6 +61,19 @@
                 </div>
                 <button class="btn-buy">Buy Now</button>
                 <i class='bx bx-x' id="close-cart"></i>
+            </div>
+            <div class="hamburger" id="user_icon" hidden>
+                <div class="nav_user" onclick="drop_down()">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="nav_user_dropdown" id="nav_user_dropdown" hidden>
+                    <ul>
+                        <a href="/Profile/profile.html">Profile</a>
+                        <a href="/Purchase History/purchase_history.html">History</a>
+                        <a href="#">Your Tickets</a>
+                        <a href="/Login/login.html" onclick="log_out()">Logout</a>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -108,6 +119,7 @@
     </footer>
     <!--Link to JS-->
     <script src="script.js"></script>
+    <script src="../Main/main.js"></script>
 </body>
 
 </html>

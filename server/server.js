@@ -76,6 +76,21 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+app.post("/user/insert_into_ticket", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { customer_id, ticket_type, quantity, price, purchase_date } = req.body;
+
+  const results = db.insert_into_ticket(
+    customer_id,
+    ticket_type,
+    quantity,
+    price,
+    purchase_date
+  );
+  results
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
 //get
 app.get("/admin/animaltable", (request, response) => {
   const db = dbService.getDbServiceInstance();

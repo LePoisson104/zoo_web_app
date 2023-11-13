@@ -47,6 +47,10 @@ header {
   text-decoration: none;
   border: none;
 }
+.logo:hover {
+  cursor: pointer;
+  color: #a9c47f;
+}
 
 .navigation a {
   position: relative;
