@@ -57,6 +57,7 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
     quantity,
     amount,
     update_quantity,
+    item_name,
   } = req.body;
 
   // Use Promise.all to wait for both promises to resolve
@@ -66,7 +67,8 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
       date_of_purchase,
       item_id,
       quantity,
-      amount
+      amount,
+      item_name
     ),
     db.update_inventory_quantity(update_quantity, item_id),
   ])
@@ -145,6 +147,14 @@ app.get("/user/get_customer_info/:email", (req, res) => {
 app.get("/user/load_shop_items", (req, res) => {
   const db = dbService.getDbServiceInstance();
   const results = db.load_shop_items();
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/admin/get_all_purchase_history", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.get_all_purchase_history();
 
   results
     .then((data) => res.json({ data: data }))

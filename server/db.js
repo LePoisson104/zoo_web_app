@@ -242,7 +242,8 @@ class dbService {
   async load_memberships() {
     try {
       const response = await new Promise((resolve, reject) => {
-        const query = "SELECT * FROM memberships WHERE membership_id != 1";
+        // WHERE membership_id != 1
+        const query = "SELECT * FROM memberships ";
         connection.query(query, (err, results) => {
           if (err) {
             reject(new Error(err, message));
@@ -343,16 +344,17 @@ class dbService {
     date_of_purchase,
     item_id,
     quantity,
-    amount
+    amount,
+    item_name
   ) {
     try {
       const response = await new Promise((resolve, reject) => {
         const query =
-          "INSERT INTO purchase_history (customer_id, date_of_purchase, item_id, quantity, amount ) values (?,?,?,?,?);";
+          "INSERT INTO purchase_history (customer_id, date_of_purchase, item_id, quantity, amount, item_name ) values (?,?,?,?,?,?);";
 
         connection.query(
           query,
-          [customer_id, date_of_purchase, item_id, quantity, amount],
+          [customer_id, date_of_purchase, item_id, quantity, amount, item_name],
           (err, result) => {
             if (err) reject(new Error(err.message));
             resolve(result);
@@ -429,6 +431,26 @@ class dbService {
     } catch (error) {
       console.log(error);
       return false;
+    }
+  }
+
+  async get_all_purchase_history() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as date_of_purchase, item_id, item_name , quantity, amount, ROUND(SUM(amount) OVER (), 2) AS total_revenue FROM purchase_history;";
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 }

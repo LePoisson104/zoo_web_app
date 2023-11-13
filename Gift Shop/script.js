@@ -33,7 +33,7 @@ function load_shop_items() {
                 <img src="${image}" alt="item image" class="product-img" style="border-radius: 5px">
                 <div class="product-details">
                     <h2 class="product-title">${item_name}</h2>
-                    <span class="price">Avaliable: ${quantity}</span>
+                    <span class="price">Available: ${quantity}</span>
                     <span class="price">$${price}</span>
                 </div>
                 <button 
@@ -91,6 +91,8 @@ function buyButtonClicked() {
     let { purchase_quantity, item_id } = purchase_items[key];
     for (let item of shop_items) {
       if (item.item_id === item_id) {
+        let purchase_total = item.price * purchase_quantity; // Assuming you have a 'price' property for each item
+
         var itemInfo = {
           customer_id: parseInt(window.localStorage.getItem("customer_id")),
           item_id,
@@ -98,6 +100,7 @@ function buyButtonClicked() {
           quantity: purchase_quantity,
           update_quantity: item.quantity - purchase_quantity,
           amount: purchase_total.toFixed(2),
+          item_name: item.item_name,
         };
         fetch(back_end_url + "/user/insert_into_purchase_history", {
           headers: {
