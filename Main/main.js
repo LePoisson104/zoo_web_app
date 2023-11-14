@@ -1,6 +1,6 @@
 function hide_and_show() {
   let role = window.localStorage.getItem("role");
-  if (role != null && role === "0") {
+  if (role != null && role === "1") {
     const login_btn = document.querySelector("#login_btn");
     const user_icon = document.querySelector("#user_icon");
     login_btn.hidden = true;

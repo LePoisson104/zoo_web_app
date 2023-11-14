@@ -86,6 +86,14 @@ function ready() {
 function buyButtonClicked() {
   if (Object.keys(purchase_items).length === 0) return;
   var cartContent = document.getElementsByClassName("cart-content")[0];
+  let today = new Date();
+  let date_of_purchase =
+    today.getFullYear() +
+    "-" +
+    ("0" + (today.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + today.getDate()).slice(-2);
+
   // Loop through each item in the cart
   Object.keys(purchase_items).forEach(function (key) {
     let { purchase_quantity, item_id } = purchase_items[key];
@@ -96,11 +104,12 @@ function buyButtonClicked() {
         var itemInfo = {
           customer_id: parseInt(window.localStorage.getItem("customer_id")),
           item_id,
-          date_of_purchase: new Date().toISOString().substring(0, 10),
+          date_of_purchase: date_of_purchase,
           quantity: purchase_quantity,
           update_quantity: item.quantity - purchase_quantity,
           amount: purchase_total.toFixed(2),
           item_name: item.item_name,
+          item_from: "gift_shop",
         };
         fetch(back_end_url + "/user/insert_into_purchase_history", {
           headers: {
@@ -112,6 +121,7 @@ function buyButtonClicked() {
           if (!response.ok) {
             alert("Server error");
           } else {
+            alert("purchase successfully");
             get_all_shop_items();
           }
         });

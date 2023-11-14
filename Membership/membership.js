@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(member_ship_options);
       }
       let role = window.localStorage.getItem("role");
-      if (role != null && role === "0") {
+      if (role != null && role === "1") {
         get_member_info(window.localStorage.getItem("username"));
       } else {
         load_member_ship_options();
@@ -157,6 +157,14 @@ function confirm_member() {
         }),
       })
         .then((res) => {
+          let today = new Date();
+          let date_of_purchase =
+            today.getFullYear() +
+            "-" +
+            ("0" + (today.getMonth() + 1)).slice(-2) +
+            "-" +
+            ("0" + today.getDate()).slice(-2);
+
           if (res.ok) {
             // Second Fetch
             return fetch(back_end_url + "/user/insert_into_purchase_history", {
@@ -169,10 +177,11 @@ function confirm_member() {
                   window.localStorage.getItem("customer_id")
                 ),
                 item_id: member_ship.item_id,
-                date_of_purchase: new Date().toISOString().substring(0, 10),
+                date_of_purchase: date_of_purchase,
                 quantity: 1,
                 amount: member_ship.price,
                 item_name: member_ship.membership_type,
+                item_from: "membership",
               }),
             });
           } else {

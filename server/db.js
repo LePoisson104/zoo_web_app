@@ -183,6 +183,22 @@ class dbService {
     }
   }
 
+  async insert_cus_email(username) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "INSERT INTO customers (email) VALUES (?);";
+        connection.query(query, [username], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result);
+        });
+      });
+      return response.affectedRows === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   async checkUsernameExists(username) {
     try {
       const response = await new Promise((resolve, reject) => {
@@ -345,16 +361,25 @@ class dbService {
     item_id,
     quantity,
     amount,
-    item_name
+    item_name,
+    item_from
   ) {
     try {
       const response = await new Promise((resolve, reject) => {
         const query =
-          "INSERT INTO purchase_history (customer_id, date_of_purchase, item_id, quantity, amount, item_name ) values (?,?,?,?,?,?);";
+          "INSERT INTO purchase_history (customer_id, date_of_purchase, item_id, quantity, amount, item_name, item_from ) values (?,?,?,?,?,?,?);";
 
         connection.query(
           query,
-          [customer_id, date_of_purchase, item_id, quantity, amount, item_name],
+          [
+            customer_id,
+            date_of_purchase,
+            item_id,
+            quantity,
+            amount,
+            item_name,
+            item_from,
+          ],
           (err, result) => {
             if (err) reject(new Error(err.message));
             resolve(result);
@@ -451,6 +476,115 @@ class dbService {
       return response;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async load_report_by_type(type) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as date_of_purchase, item_id, item_name, quantity, amount, ROUND(SUM(amount) OVER (), 2) AS total_revenue FROM purchase_history WHERE item_from = ?;";
+        connection.query(query, [type], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async insert_new_item(image, name, quantity, price) {
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO inventory (image, item_name, quantity, price) VALUES (?,?,?,?);";
+        connection.query(
+          query,
+          [image, name, quantity, price],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result.insertId);
+          }
+        );
+      });
+      return {
+        item_id: insertId,
+        image: image,
+        item_name: name,
+        quantity: quantity,
+        price: price,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async delete_item_row(id) {
+    try {
+      id = parseInt(id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query = "DELETE FROM inventory WHERE item_id = ?;";
+
+        connection.query(query, [id], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async get_item_by_id(id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT image, item_name as name, quantity, price FROM inventory WHERE item_id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async update_item(id, image, name, quantity, price) {
+    try {
+      id = parseInt(id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "UPDATE inventory SET image = ?, item_name = ?, quantity = ?, price = ? WHERE item_id = ?";
+
+        connection.query(
+          query,
+          [image, name, quantity, price, id],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result.affectedRows);
+          }
+        );
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   }
 }

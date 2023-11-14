@@ -58,6 +58,7 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
     amount,
     update_quantity,
     item_name,
+    item_from,
   } = req.body;
 
   // Use Promise.all to wait for both promises to resolve
@@ -68,7 +69,8 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
       item_id,
       quantity,
       amount,
-      item_name
+      item_name,
+      item_from
     ),
     db.update_inventory_quantity(update_quantity, item_id),
   ])
@@ -118,10 +120,28 @@ app.get("/admin/get_animal_by_id/:id", (req, res) => {
     .then((data) => res.json({ data: data }))
     .catch((err) => console.log(err));
 });
+app.get("/admin/get_item_by_id/:id", (req, res) => {
+  const { id } = req.params;
+  const db = dbService.getDbServiceInstance();
+  const results = db.get_item_by_id(id);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
 app.get("/admin/load_animal_by_enclosure/:id", (req, res) => {
   const { id } = req.params;
   const db = dbService.getDbServiceInstance();
   const results = db.load_animal_by_enclosure(id);
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/admin/load_report_by_type/:type", (req, res) => {
+  const { type } = req.params;
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_report_by_type(type);
 
   results
     .then((data) => res.json({ data: data }))
@@ -145,6 +165,14 @@ app.get("/user/get_customer_info/:email", (req, res) => {
     .catch((err) => console.log(err));
 });
 app.get("/user/load_shop_items", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_shop_items();
+
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+app.get("/admin/load_shop_items", (req, res) => {
   const db = dbService.getDbServiceInstance();
   const results = db.load_shop_items();
 
@@ -181,7 +209,16 @@ app.patch("/admin/update_animal", (request, response) => {
     .then((data) => response.json({ success: data }))
     .catch((err) => console.log(err));
 });
+app.patch("/admin/update_item", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+  const { id, image, name, quantity, price } = request.body;
+  const result = db.update_item(id, image, name, quantity, price);
 
+  result
+    //send this data back to the front end
+    .then((data) => response.json({ success: data }))
+    .catch((err) => console.log(err));
+});
 app.patch("/user/update_cus_membership", (req, res) => {
   const db = dbService.getDbServiceInstance();
   const { email, membership_id } = req.body;
@@ -205,7 +242,17 @@ app.delete("/admin/delete_animal_row/:id", (request, response) => {
     .then((data) => response.json({ success: data }))
     .catch((err) => console.log(err));
 });
+app.delete("/admin/delete_item_row/:id", (request, response) => {
+  // get id from this prams "admin/delete_animal_row/:id"
+  const { id } = request.params;
+  //   console.log(request.params);
+  const db = dbService.getDbServiceInstance();
+  const result = db.delete_item_row(id);
 
+  result
+    .then((data) => response.json({ success: data }))
+    .catch((err) => console.log(err));
+});
 // Login
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
@@ -228,16 +275,14 @@ app.post("/user/register", async (req, res) => {
 
   try {
     const usernameExists = await db.checkUsernameExists(username);
-
     if (usernameExists) {
       // Username already exists, handle accordingly
       return res.status(400).json({ message: "Email already exists" });
     }
-
     const registrationResult = await db.user_register(username, password, role);
-
     if (registrationResult) {
       // Registration successful
+      await db.insert_cus_email(username);
       return res.status(200).json({ message: "User registered successfully" });
     } else {
       // Registration failed
@@ -247,6 +292,28 @@ app.post("/user/register", async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
+});
+
+app.post("/user/insert_cus_email", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { username } = req.body;
+  const result = db.insert_cus_email(username);
+
+  result
+    //send this data back to the front end
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+
+app.post("/admin/insert_new_item", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { image, name, quantity, price } = req.body;
+  const result = db.insert_new_item(image, name, quantity, price);
+
+  result
+    //send this data back to the front end
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
 });
 
 app.listen(port, () => {

@@ -36,10 +36,10 @@
                     <a href="shop_inventory.html">Manage Shop</a>
                 </div>
             </div>
-            <div class=" dropdown">
+            <!-- <div class=" dropdown">
                 <button class="tab_btn" title=" Tickets">Tickets</button>
                 <div class="dropdown-content"><a href="tickets.html">Manage Tickets</a></div>
-            </div>
+            </div> -->
         </div>
         <div class="enclosure_option">
             <select name="enclosure" id="report_type" onchange="show_report()">
@@ -49,7 +49,7 @@
                 <option value="tickets_sales">Tickets</option>
             </select>
         </div>
-        <section class="total_sales" id="total_sales">
+        <section class="total_revenue" id="total_revenue">
             <h2>Total Revenue</h2>
             <div class="report_container">
                 <table class="animal_table">
@@ -66,7 +66,7 @@
                 </table>
             </div>
         </section>
-        <section class="gift_shop_sales" id="gift_shop_sales">
+        <section class="gift_shop_sales" id="gift_shop_sales" hidden>
             <h2>Gift Shop</h2>
             <div class="report_container">
                 <table class="animal_table">
@@ -83,7 +83,7 @@
                 </table>
             </div>
         </section>
-        <section class="membership_sales" id="membership_sales">
+        <section class="membership_sales" id="membership_sales" hidden>
             <h2>Membership</h2>
             <div class="report_container">
                 <table class="animal_table">
@@ -100,7 +100,7 @@
                 </table>
             </div>
         </section>
-        <section class="ticket_sales" id="ticket_sales">
+        <section class="ticket_sales" id="ticket_sales" hidden>
             <h2>Tickets</h2>
             <div class="report_container">
                 <table class="animal_table">

@@ -25,6 +25,7 @@ document
     formData.forEach((value, key) => {
       jsonObject[key] = value;
     });
+    console.log(jsonObject);
     if (jsonObject.enclosure === "Lion Habitat") {
       jsonObject.enclosure_id = 100;
     } else if (jsonObject.enclosure === "Elephant Zone") {

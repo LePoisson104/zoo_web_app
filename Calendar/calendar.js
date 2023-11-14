@@ -100,9 +100,9 @@ function open_modal() {
   document.getElementById("modal").classList.add("modal");
 }
 let ticket_price = {
-  Adult_Ticket: 15,
-  Child_Ticket: 5,
-  Senior_Ticket: 10,
+  Adult: 15,
+  Child: 5,
+  Senior: 10,
 };
 let booking_tickets = [];
 
@@ -126,29 +126,29 @@ function check_out() {
   //   open_modal();
   if (adults_amount != 0) {
     booking_tickets.push({
-      type: "Adult_Ticket",
-      price: ticket_price["Adult_Ticket"],
+      type: "Adult",
+      price: ticket_price["Adult"],
       date: date_selected,
       amount: adults_amount,
-      // item_id: 200,
+      item_id: 200,
     });
   }
   if (childs_amount != 0) {
     booking_tickets.push({
-      type: "Child_Ticket",
-      price: ticket_price["Child_Ticket"],
+      type: "Child",
+      price: ticket_price["Child"],
       date: date_selected,
       amount: childs_amount,
-      // item_id: 201,
+      item_id: 201,
     });
   }
   if (seniors_amount != 0) {
     booking_tickets.push({
-      type: "Senior_Ticket",
-      price: ticket_price["Senior_Ticket"],
+      type: "Senior",
+      price: ticket_price["Senior"],
       date: date_selected,
       amount: seniors_amount,
-      // item_id: 202,
+      item_id: 202,
     });
   }
 
@@ -209,19 +209,95 @@ function handle_checkout_total() {
 async function confirm_checkout() {
   let success = true;
   let count = 0;
+
   for (let booking_ticket of booking_tickets) {
-    let { type, date, amount } = booking_ticket;
-    await fetch(back_end_url + "/user/insert_into_ticket", {
+    let { type, date, amount, item_id } = booking_ticket;
+
+    // Insert into ticket
+    const ticketResponse = await fetch(
+      back_end_url + "/user/insert_into_ticket",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          customer_id: parseInt(window.localStorage.getItem("customer_id")),
+          ticket_type: type,
+          quantity: amount,
+          price: ticket_price[type],
+          purchase_date: date,
+        }),
+      }
+    );
+
+    count++;
+
+    if (!ticketResponse.ok) {
+      success = false;
+      break; // Stop the loop if ticket insertion fails
+    }
+
+    // Insert into purchase history
+    const historyResponse = await fetch(
+      back_end_url + "/user/insert_into_purchase_history",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          customer_id: parseInt(window.localStorage.getItem("customer_id")),
+          date_of_purchase: date,
+          item_id: item_id,
+          quantity: amount,
+          amount: ticket_price[type] * amount,
+          item_name: type,
+          item_from: "tickets",
+        }),
+      }
+    );
+
+    count++;
+
+    if (!historyResponse.ok) {
+      success = false;
+      break; // Stop the loop if history insertion fails
+    }
+  }
+
+  // Display alerts based on success
+  if (success) {
+    alert("Complete checkout");
+  } else {
+    alert("Server error");
+  }
+
+  // Reset input values and update UI
+  document.getElementById("ticket_booking_adult").value = 0;
+  document.getElementById("ticket_booking_child").value = 0;
+  document.getElementById("ticket_booking_senior").value = 0;
+  renderCalendar();
+  close_modal();
+  // add_to_history();
+}
+
+async function add_to_history() {
+  let count = 0;
+  for (let booking_ticket of booking_tickets) {
+    let { type, amount, item_id } = booking_ticket;
+    await fetch(back_end_url + "/user/insert_into_purchase_history", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify({
         customer_id: parseInt(window.localStorage.getItem("customer_id")),
-        ticket_type: type,
+        item_id: item_id,
+        date_of_purchase: new Date().toISOString().substring(0, 10),
         quantity: amount,
         price: ticket_price[type],
-        purchase_date: date,
+        ticket_type: type,
       }),
     }).then((response) => {
       count++;
@@ -232,40 +308,4 @@ async function confirm_checkout() {
       }
     });
   }
-
-  if (success) alert("complete checkout");
-  else alert("server error");
-  document.getElementById("ticket_booking_adult").value = 0;
-  document.getElementById("ticket_booking_child").value = 0;
-  document.getElementById("ticket_booking_senior").value = 0;
-  renderCalendar();
-  close_modal();
-  // add_to_history();
 }
-// async function add_to_history() {
-//   let count = 0;
-//   for (let booking_ticket of booking_tickets) {
-//     let { type, amount, item_id } = booking_ticket;
-//     await fetch(back_end_url + "/user/insert_into_purchase_history", {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       method: "POST",
-//       body: JSON.stringify({
-//         customer_id: parseInt(window.localStorage.getItem("customer_id")),
-//         item_id: item_id,
-//         date_of_purchase: new Date().toISOString().substring(0, 10),
-//         quantity: amount,
-//         price: ticket_price[type],
-//         ticket_type: type,
-//       }),
-//     }).then((response) => {
-//       count++;
-//       if (!response.ok) {
-//         success = false;
-//       } else {
-//         success = success && true;
-//       }
-//     });
-//   }
-// }
