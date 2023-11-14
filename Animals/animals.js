@@ -8,22 +8,37 @@ seeDetailsButtons.forEach((button) => {
   });
 });
 
-// Open the respective pop-up when an animal card is clicked
-const animalCards = document.querySelectorAll('.animal-card');
-const popups = document.querySelectorAll('.popup');
+//for animal card popups (display info)
+const animalCards = document.querySelectorAll(".animal-card");
+const popups = document.querySelectorAll(".popup");
 
 animalCards.forEach((card, index) => {
-  card.addEventListener('click', () => {
-    popups[index].style.display = 'block';
+  card.addEventListener("click", () => {
+    popups[index].style.display = "block";
   });
 });
 
-// Close the pop-up when the close button is clicked
-const closeBtns = document.querySelectorAll('.close');
+const closeBtns = document.querySelectorAll(".close");
 
 closeBtns.forEach((closeBtn, index) => {
-  closeBtn.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent any default link behavior
-    popups[index].style.display = 'none';
+  closeBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    popups[index].style.display = "none";
+  });
+  //filter animals by species
+  document.addEventListener("DOMContentLoaded", function () {
+    var speciesFilter = document.getElementById("speciesFilter");
+    var animalCards = document.querySelectorAll(".animal-card");
+    speciesFilter.addEventListener("change", function () {
+      var selectedSpecies = speciesFilter.value;
+      animalCards.forEach(function (card) {
+        var cardSpecies = card.classList[1];
+        if (selectedSpecies === "all" || cardSpecies === selectedSpecies) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
   });
 });
