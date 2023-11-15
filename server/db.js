@@ -450,16 +450,24 @@ class dbService {
     ticket_type,
     quantity,
     price,
-    purchase_date
+    purchase_date,
+    ticket_date
   ) {
     try {
       const response = await new Promise((resolve, reject) => {
         const query =
-          "INSERT INTO ticket_inventory (customer_id, ticket_type, quantity, price, purchase_date) VALUES (?,?,?,?,?)";
+          "INSERT INTO ticket_inventory (customer_id, ticket_type, quantity, price, purchase_date, ticket_date) VALUES (?,?,?,?,?,?)";
 
         connection.query(
           query,
-          [customer_id, ticket_type, quantity, price, purchase_date],
+          [
+            customer_id,
+            ticket_type,
+            quantity,
+            price,
+            purchase_date,
+            ticket_date,
+          ],
           (err, result) => {
             if (err) reject(new Error(err.message));
             resolve(result);
@@ -599,6 +607,133 @@ class dbService {
     } catch (error) {
       console.log(error);
       return false;
+    }
+  }
+  // attractions
+  async getAllAttractionData() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT attraction_id, image, animal_name, exhibit_name, description, ride FROM attractions;";
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async insertNewAttraction(image, exhibit, name, description, ride) {
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query =
+          "INSERT INTO attractions (image, exhibit_name, animal_name, description, ride) VALUES (?,?,?,?,?);";
+        connection.query(
+          query,
+          [image, exhibit, name, description, ride],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result.insertId);
+          }
+        );
+      });
+      return {
+        id: insertId,
+        image: image,
+        exhibit: exhibit,
+        name: name,
+        description: description,
+        ride: ride,
+      };
+    } catch {
+      console.log(error);
+    }
+  }
+  async delete_attraction_row(id) {
+    try {
+      id = parseInt(id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query = "DELETE FROM attractions WHERE attraction_id = ?;";
+
+        connection.query(query, [id], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+  async update_attraction(id, image, exhibit, name, description, ride) {
+    try {
+      id = parseInt(id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "UPDATE attractions SET image = ?, exhibit_name = ?, animal_name = ?, description = ?, ride = ? WHERE attraction_id = ?";
+
+        connection.query(
+          query,
+          [image, exhibit, name, description, ride],
+          (err, result) => {
+            if (err) reject(new Error(err.message));
+            resolve(result);
+          }
+        );
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async load_ticket_table(id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT DATE_FORMAT(purchase_date, '%Y-%m-%d') as purchase_date, DATE_FORMAT(ticket_date, '%Y-%m-%d') as ticket_date, ticket_type, quantity FROM ticket_inventory WHERE customer_id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async load_history_by_id(id) {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as purchase_date, item_id, item_name, quantity, amount FROM purchase_history WHERE customer_id = ?;";
+        connection.query(query, [id], (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
     }
   }
 }

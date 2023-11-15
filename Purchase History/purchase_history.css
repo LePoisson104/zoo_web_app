@@ -7,7 +7,7 @@
   font-family: "Poppins";
 }
 
-header {
+/* header {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ header {
   align-items: center;
   z-index: 99;
   border-bottom: 1px solid gray;
-}
+} */
 
 .logo {
   font-size: 2em;
@@ -140,46 +140,9 @@ header {
   transform-origin: left;
   transform: scaleX(1);
 }
-.purchase_container {
-  margin: 60px auto 0 auto;
-  display: flex;
-  flex-direction: column;
-  background-color: #ccc;
-  width: 50%;
-  height: 100vh;
-}
-h1 {
-  margin: 0 auto;
-  color: #006747;
-}
-.purchase {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  text-align: left;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
-.purchase h2 {
-  font-size: 24px;
-}
-
-.purchase-details {
-  list-style: none;
-  padding: 0;
-}
-
-.purchase-details li {
-  margin: 5px 0;
-}
 .footer_container {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   background-color: #006747;
   position: relative;
   right: 0;
@@ -190,12 +153,12 @@ h1 {
 .footer_container .footer_items h2 {
   color: #a9c47f;
   font-size: 20px;
+  padding-bottom: 10px;
 }
 .footer_container .footer_items p {
   font-size: 14px;
   color: white;
   margin-top: 0;
-  text-decoration: underline;
 }
 .footer_container .footer_items a {
   color: #a9c47f;
@@ -222,4 +185,75 @@ h1 {
 }
 .footer_container .footer_items i:hover {
   color: #a9c47f;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 100px;
+  background: #006747;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.ticket_history_container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.ticket_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  width: 70%;
+  margin-top: 5vh;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.ticket_table thead tr {
+  background-color: #006747;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.ticket_table th,
+.ticket_table td {
+  text-align: center;
+  padding: 12px 15px;
+}
+
+.ticket_table tbody tr {
+  border-bottom: 1px solid white;
+}
+
+.ticket_table tbody tr:nth-of-type(even) {
+  background-color: #e0e0e0;
+}
+
+.ticket_table tbody tr:last-of-type {
+  border-bottom: 2px solid #006747;
+}
+
+footer {
+  background-color: #006747;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }

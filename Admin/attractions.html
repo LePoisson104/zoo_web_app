@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shop Management</title>
-    <link rel="stylesheet" href="shop_inventory.css">
-    <link rel="stylesheet" href="header_N_nav.css">
+    <title>Attraction Page</title>
+    <link rel="stylesheet" href="attraction.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="header_N_nav.css">
+
 </head>
 
 <body>
     <header>
-        <h1>Shop Management</h1>
+        <h1>Attraction Management</h1>
         <div class="logout_container">
             <a href="/Login/login.html" onclick="log_out()">Log Out</a>
         </div>
@@ -36,74 +35,77 @@
         <main>
             <section class="form_sec" id="input_form">
                 <div class="form_container">
-                    <div class="title" id="form-title">Add Item
-
-                        <div id="aleart_success" hidden>Item added successfully!</div>
+                    <div class="title" id="form-title">Add/Edit/Delete Attraction(s)
+                        <div id="aleart_success" hidden>Attraction added successfully!</div>
                     </div>
-                    <form id="item_info_form">
-                        <div class="animal_info">
-
+                    <form id="attraction_info_form">
+                        <div class="attraction_info">
                             <div class="input_box">
                                 <label for="animal_image">Image: <span>(url)</span></label>
-                                <input type="text" name="image" pattern=".{1,300}" id="item_image" required>
+                                <input type="text" name="image" id="animal_image" required>
+                            </div>
+                            <div class="input_box">
+                                <label for="exhibit_name">Exhibit Name:</label>
+                                <input type="text" name="exhibit" id="exhibit_name" required>
                             </div>
                             <div class="input_box">
                                 <label for="animal_name">Name:</label>
-                                <input type="text" name="name" id="item_name" required>
+                                <input type="text" name="name" id="animal_name" required>
                             </div>
                             <div class="input_box">
-                                <label for="animal_age">Quantity:</label>
-                                <input type="number" name="quantity" id="item_quantity" required>
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="description" required>
                             </div>
-
                             <div class="input_box">
-                                <label for="animal_weight">Price: <span>$</span></label>
-                                <input type="number" name="price" id="item_price" step="any" required>
+                                <label for="ride_name">Ride:</label>
+                                <input type="text" name="ride" id="ride_name" required>
                             </div>
                             <button type="submit">Add</button>
                         </div>
                     </form>
-                </div>
             </section>
             <section class="form_sec" id="update_form" hidden>
                 <div class="form_container">
-                    <div class="title" id="form-title">Update Item
-                        <div id="aleart_success" hidden>Item updated successfully!</div>
+                    <div class="title" id="form-title">Update Attraction(s)
+                        <div id="aleart_success" hidden>Attraction updated successfully!</div>
                     </div>
-                    <form id="item_update_info_form">
-                        <div class="animal_info">
+                    <form id="attraction_info_form">
+                        <div class="attraction_info">
                             <div class="input_box">
                                 <label for="animal_image">Image: <span>(url)</span></label>
-                                <input type="text" name="image" pattern=".{1,300}" id="item_image" required>
+                                <input type="text" name="image" id="animal_image" required>
+                            </div>
+                            <div class="input_box">
+                                <label for="exhibit_name">Exhibit Name:</label>
+                                <input type="text" name="exhibit" id="exhibit_name" required>
                             </div>
                             <div class="input_box">
                                 <label for="animal_name">Name:</label>
-                                <input type="text" name="name" id="item_name" required>
+                                <input type="text" name="animal" id="animal_name" required>
                             </div>
                             <div class="input_box">
-                                <label for="animal_age">Quantity:</label>
-                                <input type="number" name="quantity" id="item_quantity" required>
+                                <label for="description">Description:</label>
+                                <input type="text" name="description" id="description" required>
                             </div>
-
                             <div class="input_box">
-                                <label for="animal_weight">Price: <span>$</span></label>
-                                <input type="number" name="price" id="item_price" step="any" required>
+                                <label for="ride_name">Ride:</label>
+                                <input type="text" name="ride" id="ride_name" required>
                             </div>
-                            <button onclick="cancel_update()">Cancel</button>
                             <button type="submit">Update</button>
                         </div>
                     </form>
             </section>
-        </main>
+
     </div>
-    <div class="animal_table_container">
-        <table class="animal_table">
+    <div class="attraction_table_container">
+        <table class="attraction_table">
             <thead>
-                <th>Item ID</th>
+                <th>Attraction_ID</th>
                 <th>Image</th>
+                <th>Exhibit</th>
                 <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
+                <th>Description</th>
+                <th>Ride</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </thead>
@@ -111,7 +113,10 @@
             </tbody>
         </table>
     </div>
+    </main>
 </body>
+<script src="attractions.js"></script>
+<script src="logout.js"></script>
 <footer>
     <div class="footer_container">
         <div class="footer_items">
@@ -138,7 +143,5 @@
         </div>
     </div>
 </footer>
-<script src="logout.js"></script>
-<script src="shop_inventory.js"></script>
 
 </html>

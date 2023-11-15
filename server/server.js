@@ -82,14 +82,22 @@ app.post("/user/insert_into_purchase_history", (req, res) => {
 });
 app.post("/user/insert_into_ticket", (req, res) => {
   const db = dbService.getDbServiceInstance();
-  const { customer_id, ticket_type, quantity, price, purchase_date } = req.body;
+  const {
+    customer_id,
+    ticket_type,
+    quantity,
+    price,
+    purchase_date,
+    ticket_date,
+  } = req.body;
 
   const results = db.insert_into_ticket(
     customer_id,
     ticket_type,
     quantity,
     price,
-    purchase_date
+    purchase_date,
+    ticket_date
   );
   results
     .then((data) => res.json({ success: data }))
@@ -316,6 +324,80 @@ app.post("/admin/insert_new_item", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// attractions
+app.post("/admin/insertattraction", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+  const { image, exhibit, name, description, ride } = request.body;
+  const result = db.insertNewAttraction(
+    image,
+    exhibit,
+    name,
+    description,
+    ride
+  );
+
+  result
+    //send this data back to the front end
+    .then((data) => response.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+
+app.get("/admin/attractionstable", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.getAllAttractionData();
+  results
+    .then((data) => response.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+
+app.patch("/admin/update_attraction", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+  const { id, image, exhibit, name, description, ride } = request.body;
+  const result = db.update_attraction(
+    id,
+    image,
+    exhibit,
+    name,
+    description,
+    ride
+  );
+
+  result
+    //send this data back to the front end
+    .then((data) => response.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+
+app.delete("/admin/delete_attraction_row/:id", (request, response) => {
+  // get id from this prams "admin/delete_animal_row/:id"
+  const { id } = request.params;
+  //   console.log(request.params);
+  const db = dbService.getDbServiceInstance();
+  const result = db.delete_attraction_row(id);
+
+  result
+    .then((data) => response.json({ success: data }))
+    .catch((err) => console.log(err));
+});
+// end of attractions
+
+app.get("/user/load_ticket_history/:id", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { id } = req.params;
+  const results = db.load_ticket_table(id);
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+
+app.get("/user/load_purchase_history_by_id/:id", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const { id } = req.params;
+  const results = db.load_history_by_id(id);
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

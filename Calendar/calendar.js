@@ -209,10 +209,15 @@ function handle_checkout_total() {
 async function confirm_checkout() {
   let success = true;
   let count = 0;
-
+  let today1 = new Date();
+  let date_of_purchase1 =
+    today1.getFullYear() +
+    "-" +
+    ("0" + (today1.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + today1.getDate()).slice(-2);
   for (let booking_ticket of booking_tickets) {
     let { type, date, amount, item_id } = booking_ticket;
-
     // Insert into ticket
     const ticketResponse = await fetch(
       back_end_url + "/user/insert_into_ticket",
@@ -226,7 +231,8 @@ async function confirm_checkout() {
           ticket_type: type,
           quantity: amount,
           price: ticket_price[type],
-          purchase_date: date,
+          purchase_date: date_of_purchase1,
+          ticket_date: date,
         }),
       }
     );

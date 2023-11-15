@@ -7,7 +7,7 @@
   font-family: "Poppins";
 }
 
-header {
+/* header {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ header {
   align-items: center;
   z-index: 99;
   border-bottom: 1px solid gray;
-}
+} */
 
 .logo {
   font-size: 2em;
@@ -140,165 +140,6 @@ header {
   transform-origin: left;
   transform: scaleX(1);
 }
-
-header2 {
-  background-color: #006747;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-
-h1 {
-  font-size: 36px;
-}
-
-.attraction_table_container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10vh;
-  margin-bottom: 30vh;
-}
-
-.attraction_table {
-  text-align: center;
-  font-size: 1.2rem;
-  background-color: white;
-  width: 90%; /* Adjust the width as needed */
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px;
-}
-
-.attraction_table th,
-.attraction_table td {
-  padding: 40px;
-}
-
-.attraction_table th {
-  background-color: #006747;
-  color: white;
-}
-
-.attraction_table td {
-  background-color: #f4f4f4;
-}
-
-.attraction_table tbody tr:hover {
-  background-color: #e0e0e0;
-}
-
-.btn {
-  width: 5rem;
-  height: 30px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
-
-.edit_btn {
-  background-color: #006747;
-  color: white;
-}
-.edit_btn:hover {
-  background-color: #009a6a;
-}
-.delete_btn {
-  background-color: rgb(179, 9, 9);
-  color: white;
-}
-.delete_btn:hover {
-  background-color: rgb(243, 88, 88);
-}
-/* form css */
-#aleart_success {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #006747;
-  color: white;
-  padding-block: 0.7rem;
-  font-size: 1rem;
-  text-align: center;
-  width: 50%;
-  margin-left: 25%;
-  border-radius: 10px;
-}
-.form_container {
-  max-width: 700px;
-  width: 100%;
-  margin-left: 25%;
-  margin-top: 50px;
-  padding: 25px 30px;
-  border-radius: 5px;
-  background-color: white;
-}
-.form_container .title {
-  font-size: 25px;
-  font-weight: 500;
-  position: relative;
-}
-.form_container form .attraction_info {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-form .attraction_info .input_box {
-  margin: 20px 0 12px 0;
-  width: calc(100% / 2-20px);
-}
-.attraction_info .input_box label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-.attraction_info .input_box input {
-  height: 45px;
-  width: 100%;
-  outline: none;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  padding-left: 10px;
-}
-form button {
-  height: 45px;
-  margin-top: 100px;
-  cursor: pointer;
-  width: 60px;
-  height: 30px;
-  background-color: #006747;
-  color: white;
-  border: 1px solid white;
-  border-radius: 5px;
-}
-form button:hover {
-  background-color: #009a6a;
-}
-
-.fade_animate {
-  animation: fade 2s ease-in-out forwards;
-}
-
-@keyframes fade {
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-span {
-  font-size: 14px;
-  font-weight: 500;
-}
-select {
-  width: 70px;
-  height: 30px;
-  border-radius: 5px;
-  text-align: center;
-}
-
 .footer_container {
   display: flex;
   justify-content: center;
@@ -344,4 +185,75 @@ select {
 }
 .footer_container .footer_items i:hover {
   color: #a9c47f;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 100px;
+  background: #006747;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.ticket_history_container {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.ticket_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  width: 70%;
+  margin-top: 5vh;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.ticket_table thead tr {
+  background-color: #006747;
+  color: white;
+  text-align: left;
+  font-weight: bold;
+}
+
+.ticket_table th,
+.ticket_table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.ticket_table tbody tr {
+  border-bottom: 1px solid white;
+}
+
+.ticket_table tbody tr:nth-of-type(even) {
+  background-color: #e0e0e0;
+}
+
+.ticket_table tbody tr:last-of-type {
+  border-bottom: 2px solid #006747;
+}
+
+footer {
+  background-color: #006747;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
