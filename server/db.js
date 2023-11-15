@@ -614,7 +614,7 @@ class dbService {
     try {
       const response = await new Promise((resolve, reject) => {
         const query =
-          "SELECT attraction_id, image, animal_name, exhibit_name, description, ride FROM attractions;";
+          "SELECT attraction_id, image, exhibit_name, animal_name, description, ride FROM attractions;";
         connection.query(query, (err, results) => {
           if (err) {
             reject(new Error(err, message));
@@ -682,7 +682,7 @@ class dbService {
 
         connection.query(
           query,
-          [image, exhibit, name, description, ride],
+          [image, exhibit, name, description, ride, id],
           (err, result) => {
             if (err) reject(new Error(err.message));
             resolve(result);

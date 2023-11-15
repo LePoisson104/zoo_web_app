@@ -350,9 +350,10 @@ app.get("/admin/attractionstable", (request, response) => {
     .catch((err) => console.log(err));
 });
 
-app.patch("/admin/update_attraction", (request, response) => {
+app.patch("/admin/update_attraction/:id", (request, response) => {
   const db = dbService.getDbServiceInstance();
-  const { id, image, exhibit, name, description, ride } = request.body;
+  const { id } = request.params;
+  const { image, exhibit, name, description, ride } = request.body;
   const result = db.update_attraction(
     id,
     image,

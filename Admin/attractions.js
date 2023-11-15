@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 let aleart_success = document.getElementById("aleart_success");
 
+function updateTable() {
+  fetch("http://localhost:3100/admin/attractionstable")
+    .then((response) => response.json())
+    .then((data) => load_attraction_table(data["data"]));
+}
+
 document
   .getElementById("attraction_info_form")
   .addEventListener("submit", function (event) {
@@ -37,6 +43,7 @@ document
           aleart_success.hidden = true;
           aleart_success.classList.remove("fade_animate");
         }, 2000);
+        updateTable();
       });
   });
 //insert row in animal table
@@ -73,22 +80,22 @@ function load_attraction_table(data) {
 
   if (data.length === 0) {
     //insert no data table when there is no data
-    table.innerHTML = "<tr><td class='no_data' colspan='10'>NO DATA</td></tr>";
+    table.innerHTML = "<tr><td class='no_data' colspan='8'>NO DATA</td></tr>";
     return;
   }
   data.forEach(function ({
     attraction_id,
     image,
-    animal_name,
     exhibit_name,
+    animal_name,
     description,
     ride,
   }) {
     attraction_table += "<tr>";
     attraction_table += `<td>${attraction_id}</td>`;
     attraction_table += `<td><img style="width: 5rem; height: 5rem;" src="${image}" alt="picture of the animal"></td>`;
-    attraction_table += `<td>${animal_name}</td>`;
     attraction_table += `<td>${exhibit_name}</td>`;
+    attraction_table += `<td>${animal_name}</td>`;
     attraction_table += `<td>${description}</td>`;
     attraction_table += `<td>${ride}</td>`;
     attraction_table += `<td><button class="btn edit_btn" data-id=${attraction_id} onclick="edit_attraction(this)">Edit</button></td>`;
@@ -99,29 +106,19 @@ function load_attraction_table(data) {
 }
 //update attraction
 function edit_attraction(object) {
-  //   console.log(object.getAttribute("data-id"));
-  //   document.getElementById("form-title").innerText =
-  //     "Update animal " + object.getAttribute("data-id");
   const id = object.getAttribute("data-id");
-  //   console.log(id);
+  console.log(id);
   const updateSection = document.querySelector("#update_form");
   const inputSection = document.querySelector("#input_form");
   inputSection.hidden = true;
   updateSection.hidden = false;
-  //   document.getElementById("image").value = "12";
-  //   document.getElementById("name").value = "12";
-  //   document.getElementById("species").value = "12";
-  //   document.getElementById("enclosure").value = "12";
-  //   document.getElementById("age").value = 12;
-  //   document.getElementById("gender").value = "M";
-  //   document.getElementById("weight").value = 12;
 
   document
-    .getElementById("attraction_info_form")
+    .getElementById("attraction-update_info_form")
     .addEventListener("submit", function (event) {
       event.preventDefault(); // Prevent the default form submission
 
-      const form = document.getElementById("attraction_info_form");
+      const form = document.getElementById("attraction_update_info_form");
       const formData = new FormData(form);
       // Convert the form data to a JSON object
       const jsonObject = {};
@@ -129,8 +126,9 @@ function edit_attraction(object) {
         jsonObject[key] = value;
       });
       jsonObject.id = id;
+      console.log(jsonObject);
       //   console.log(jsonObject);
-      fetch("http://localhost:3100/admin/update_attraction", {
+      fetch("http://localhost:3100/admin/update_attraction/" + id, {
         headers: {
           "Content-Type": "application/json",
         },

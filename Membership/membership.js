@@ -52,14 +52,14 @@ function load_member_ship_options() {
                             </li>
                             <li>${
                               member_ship_options[member_ship].adults
-                            } free adult ticket</li>
+                            } free adults ticket</li>
                             <li ${
                               member_ship_options[member_ship].guests === 0 &&
                               "hidden"
                             }>
                                 ${
                                   member_ship_options[member_ship].guests
-                                } free guest ticket
+                                } free guests ticket
                             </li>
                         </ul>
                     </div>
