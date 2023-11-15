@@ -2,11 +2,18 @@ const mysql = require("mysql");
 const { message } = require("prompt");
 let instance = null;
 
+// const connection = mysql.createConnection({
+//   host: "team7db.cymql2sd4zy7.us-east-1.rds.amazonaws.com",
+//   database: "zoo",
+//   user: "team7db",
+//   password: "Team71042002",
+// });
+
 const connection = mysql.createConnection({
-  host: "team7db.cymql2sd4zy7.us-east-1.rds.amazonaws.com",
+  host: "localhost",
   database: "zoo",
-  user: "team7db",
-  password: "Team71042002",
+  user: "root",
+  password: "root1234",
 });
 
 connection.connect((err) => {
@@ -60,11 +67,17 @@ class dbService {
           query,
           [image, name, species, enclosure, enclosure_id, age, gender, weight],
           (err, result) => {
-            if (err) reject(new Error(err.message));
-            resolve(result.insertId);
+            if (err) {
+              reject(new Error(err.message));
+            } else if (result && result.insertId) {
+              resolve(result.insertId);
+            } else {
+              reject(new Error("Insert operation did not return an insertId."));
+            }
           }
         );
       });
+
       return {
         id: insertId,
         image: image,
@@ -75,10 +88,11 @@ class dbService {
         gender: gender,
         weight: weight,
       };
-    } catch {
+    } catch (error) {
       console.log(error);
     }
   }
+
   //function to delete animal row
   async delete_animal_row(id) {
     try {

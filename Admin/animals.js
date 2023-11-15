@@ -25,7 +25,7 @@ document
     formData.forEach((value, key) => {
       jsonObject[key] = value;
     });
-    console.log(jsonObject);
+    // console.log(jsonObject);
     if (jsonObject.enclosure === "Lion Habitat") {
       jsonObject.enclosure_id = 100;
     } else if (jsonObject.enclosure === "Elephant Zone") {
@@ -47,14 +47,20 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
-        insert_animal_row(data["data"]);
-        event.target.reset();
-        aleart_success.hidden = false;
-        aleart_success.classList.add("fade_animate");
-        setTimeout(() => {
-          aleart_success.hidden = true;
-          aleart_success.classList.remove("fade_animate");
-        }, 2000);
+        if (Object.keys(data).length === 0) {
+          alert("enclosure already full");
+          location.reload();
+          return;
+        } else {
+          insert_animal_row(data["data"]);
+          event.target.reset();
+          aleart_success.hidden = false;
+          aleart_success.classList.add("fade_animate");
+          setTimeout(() => {
+            aleart_success.hidden = true;
+            aleart_success.classList.remove("fade_animate");
+          }, 2000);
+        }
       });
   });
 //insert row in animal table

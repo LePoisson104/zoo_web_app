@@ -239,6 +239,13 @@ async function confirm_checkout() {
     }
 
     // Insert into purchase history
+    let today = new Date();
+    let date_of_purchase =
+      today.getFullYear() +
+      "-" +
+      ("0" + (today.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + today.getDate()).slice(-2);
     const historyResponse = await fetch(
       back_end_url + "/user/insert_into_purchase_history",
       {
@@ -248,7 +255,7 @@ async function confirm_checkout() {
         method: "POST",
         body: JSON.stringify({
           customer_id: parseInt(window.localStorage.getItem("customer_id")),
-          date_of_purchase: date,
+          date_of_purchase: date_of_purchase,
           item_id: item_id,
           quantity: amount,
           amount: ticket_price[type] * amount,
