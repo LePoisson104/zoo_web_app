@@ -736,6 +736,45 @@ class dbService {
       console.log(error);
     }
   }
+
+  async load_notification() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query =
+          "SELECT id, SUBSTRING(time, 12, 5) AS time, DATE_FORMAT(date, '%Y-%m-%d') as date, message FROM notification_table;";
+        connection.query(query, (err, results) => {
+          if (err) {
+            reject(new Error(err, message));
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async delete_notification_row(id) {
+    try {
+      id = parseInt(id, 10);
+      const response = await new Promise((resolve, reject) => {
+        const query = "DELETE FROM notification_table WHERE id = ?;";
+
+        connection.query(query, [id], (err, result) => {
+          if (err) reject(new Error(err.message));
+          resolve(result.affectedRows);
+        });
+      });
+
+      return response === 1 ? true : false;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }
 
 module.exports = dbService;

@@ -399,6 +399,24 @@ app.get("/user/load_purchase_history_by_id/:id", (req, res) => {
     .then((data) => res.json({ data: data }))
     .catch((err) => console.log(err));
 });
+
+app.get("/admin/load_notification", (req, res) => {
+  const db = dbService.getDbServiceInstance();
+  const results = db.load_notification();
+  results
+    .then((data) => res.json({ data: data }))
+    .catch((err) => console.log(err));
+});
+
+app.delete("/admin/delete_notification_row/:id", (req, res) => {
+  const { id } = req.params;
+  const db = dbService.getDbServiceInstance();
+  const result = db.delete_notification_row(id);
+
+  result
+    .then((data) => res.json({ success: data }))
+    .catch((err) => console.log(err));
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
