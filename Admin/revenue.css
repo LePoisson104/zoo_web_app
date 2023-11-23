@@ -41,3 +41,31 @@ h2 {
   margin-top: 40px;
   text-align: center;
 }
+.filter_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+  padding-block: 1rem;
+  padding-inline: 2rem;
+  gap: 1rem;
+}
+
+.date_filter > input {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.filter_btn {
+  width: 5rem;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #006747;
+  color: white;
+}
+.filter_btn:hover {
+  background-color: #009a6a;
+}
