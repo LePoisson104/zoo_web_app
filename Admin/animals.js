@@ -150,47 +150,56 @@ function edit_animal(object) {
   const inputSection = document.querySelector("#input_form");
   inputSection.hidden = true;
   updateSection.hidden = false;
+
+  // Remove the existing event listener for the update form
+  const updateForm = document.getElementById("animal_update_info_form");
+  const clonedForm = updateForm.cloneNode(true);
+  updateForm.parentNode.replaceChild(clonedForm, updateForm);
+
+  // Load animal data into the update form
   load_animal_by_id(id);
 
-  document
-    .getElementById("animal_update_info_form")
-    .addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent the default form submission
-      const form = document.getElementById("animal_update_info_form");
-      const formData = new FormData(form);
-      // Convert the form data to a JSON object
-      const jsonObject = {};
-      formData.forEach((value, key) => {
-        jsonObject[key] = value;
-      });
-      jsonObject.id = id;
-      fetch(back_end_url + "/admin/update_animal", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify(jsonObject),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            event.target.reset();
-            //hide the update form and show the add form
-            const updateSection = document.querySelector("#update_form");
-            const inputSection = document.querySelector("#input_form");
-            inputSection.hidden = false;
-            updateSection.hidden = true;
-            location.reload();
-          }
-          //reset the form input values
-        });
+  // Add a new event listener for the update form
+  clonedForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    const form = document.getElementById("animal_update_info_form");
+    const formData = new FormData(form);
+    // Convert the form data to a JSON object
+    const jsonObject = {};
+    formData.forEach((value, key) => {
+      jsonObject[key] = value;
     });
+    jsonObject.id = id;
+    fetch(back_end_url + "/admin/update_animal", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+      body: JSON.stringify(jsonObject),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          event.target.reset();
+          // Hide the update form and show the add form
+          inputSection.hidden = false;
+          updateSection.hidden = true;
+          location.reload();
+        }
+        // Reset the form input values
+      });
+  });
 }
+
 function cancel_update() {
   const updateSection = document.querySelector("#update_form");
   const inputSection = document.querySelector("#input_form");
   inputSection.hidden = false;
   updateSection.hidden = true;
+  //cancel the values store in the update form when click cancel
+  const updateForm = document.getElementById("animal_update_info_form");
+  const clonedForm = updateForm.cloneNode(true);
+  updateForm.parentNode.replaceChild(clonedForm, updateForm);
 }
 //delete animal
 function deleteAnimalRow(object) {
