@@ -52,6 +52,7 @@ document
           location.reload();
           return;
         } else {
+          console.log(data);
           insert_animal_row(data["data"]);
           event.target.reset();
           aleart_success.hidden = false;
@@ -71,14 +72,13 @@ function insert_animal_row(data) {
 
   for (var key in data) {
     if (data.hasOwnProperty(key) && data[key].length > 50) {
-      animal_table += `<td><img style="width: 5rem; height: 5rem;" src="${data[key]}" alt="picture of the animal"</td>`;
+      animal_table += `<td> <img class="animal_table_image" src="${data[key]}" alt="picture of the animal"</td>`;
     } else if (data.hasOwnProperty(key)) {
       animal_table += `<td>${data[key]}</td>`;
     }
   }
-
-  animal_table += `<td><button class="btn edit_btn" data-id=${data[key]} onclick="edit_animal(this)">Edit</button></td>`;
-  animal_table += `<td><button class="btn delete_btn" data-id=${data[key]} onclick="deleteAnimalRow(this)">Delete</button></td>`;
+  animal_table += `<td><button class="btn edit_btn" data-id=${data.id} onclick="edit_animal(this)">Edit</button></td>`;
+  animal_table += `<td><button class="btn delete_btn" data-id=${data.id} onclick="deleteAnimalRow(this)">Delete</button></td>`;
 
   animal_table += "</tr>";
 

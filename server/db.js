@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const { message } = require("prompt");
 let instance = null;
 
 const connection = mysql.createConnection({
@@ -36,7 +35,7 @@ class dbService {
           "SELECT animal_id, image, animal_name, species, enclosure, age, gender, weight FROM animals;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -152,7 +151,7 @@ class dbService {
           "SELECT enclosures.enclosure_id, enclosures.enclosure_name, enclosures.capacity, GROUP_CONCAT(animals.animal_name ORDER BY animals.animal_name) AS name_list, COUNT(animals.animal_id) AS animal_count FROM enclosures LEFT JOIN animals ON enclosures.enclosure_id = animals.enclosure_id GROUP BY enclosures.enclosure_id, enclosures.enclosure_name;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -236,7 +235,7 @@ class dbService {
           "SELECT image, animal_name as name, species, enclosure, age, gender, weight FROM animals WHERE animal_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -256,7 +255,7 @@ class dbService {
           "SELECT animal_id, image, animal_name, species, enclosure, age, gender, weight FROM animals WHERE enclosure_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -276,7 +275,7 @@ class dbService {
         const query = "SELECT * FROM memberships ";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -338,7 +337,7 @@ class dbService {
         const query = "SELECT * FROM customers WHERE email = ?";
         connection.query(query, [email], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -414,7 +413,7 @@ class dbService {
         const query = "SELECT * FROM inventory;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -488,7 +487,7 @@ class dbService {
           "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as date_of_purchase, item_id, item_name , quantity, amount, ROUND(SUM(amount) OVER (), 2) AS total_revenue FROM purchase_history;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -508,7 +507,7 @@ class dbService {
           "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as date_of_purchase, item_id, item_name, quantity, amount, ROUND(SUM(amount) OVER (), 2) AS total_revenue FROM purchase_history WHERE item_from = ?;";
         connection.query(query, [type], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -573,7 +572,7 @@ class dbService {
           "SELECT image, item_name as name, quantity, price FROM inventory WHERE item_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -617,7 +616,7 @@ class dbService {
           "SELECT attraction_id, image, exhibit_name, animal_name, description, ride FROM attractions;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -704,7 +703,7 @@ class dbService {
           "SELECT DATE_FORMAT(purchase_date, '%Y-%m-%d') as purchase_date, DATE_FORMAT(ticket_date, '%Y-%m-%d') as ticket_date, ticket_type, quantity FROM ticket_inventory WHERE customer_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -724,7 +723,7 @@ class dbService {
           "SELECT purchase_id, DATE_FORMAT(date_of_purchase, '%Y-%m-%d') as purchase_date, item_id, item_name, quantity, amount FROM purchase_history WHERE customer_id = ?;";
         connection.query(query, [id], (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }
@@ -744,7 +743,7 @@ class dbService {
           "SELECT id, SUBSTRING(time, 12, 5) AS time, DATE_FORMAT(date, '%Y-%m-%d') as date, message FROM notification_table;";
         connection.query(query, (err, results) => {
           if (err) {
-            reject(new Error(err, message));
+            reject(new Error(err.message));
           } else {
             resolve(results);
           }

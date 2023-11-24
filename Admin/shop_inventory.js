@@ -25,7 +25,6 @@ document
     formData.forEach((value, key) => {
       jsonObject[key] = value;
     });
-    console.log(jsonObject);
 
     fetch(back_end_url + "/admin/insert_new_item", {
       headers: {
@@ -36,7 +35,6 @@ document
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         insert_item_row(data["data"]);
         event.target.reset();
         aleart_success.hidden = false;
@@ -61,8 +59,8 @@ function insert_item_row(data) {
     }
   }
 
-  animal_table += `<td><button class="btn edit_btn" data-id=${data[key]} onclick="edit_item(this)">Edit</button></td>`;
-  animal_table += `<td><button class="btn delete_btn" data-id=${data[key]} onclick="deleteAnimalRow(this)">Delete</button></td>`;
+  animal_table += `<td><button class="btn edit_btn" data-id=${data.item_id} onclick="edit_item(this)">Edit</button></td>`;
+  animal_table += `<td><button class="btn delete_btn" data-id=${data.item_id} onclick="deleteAnimalRow(this)">Delete</button></td>`;
 
   animal_table += "</tr>";
 
@@ -108,7 +106,6 @@ async function load_item_by_id(id) {
 
   let data = await res.json();
   let animal = data.data[0];
-  // console.log(animal);
   const form = document.querySelector("#item_update_info_form");
   let elements = Array.from(form.elements);
   for (let element of elements) {
@@ -176,7 +173,6 @@ function cancel_update() {
 //delete animal
 function deleteAnimalRow(object) {
   let id = object.getAttribute("data-id");
-  //   console.log(id);
   fetch(back_end_url + "/admin/delete_item_row/" + id, {
     method: "DELETE",
   })
