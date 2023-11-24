@@ -61,7 +61,7 @@ function insert_item_row(data) {
     }
   }
 
-  animal_table += `<td><button class="btn edit_btn" data-id=${data[key]} onclick="edit_animal(this)">Edit</button></td>`;
+  animal_table += `<td><button class="btn edit_btn" data-id=${data[key]} onclick="edit_item(this)">Edit</button></td>`;
   animal_table += `<td><button class="btn delete_btn" data-id=${data[key]} onclick="deleteAnimalRow(this)">Delete</button></td>`;
 
   animal_table += "</tr>";
