@@ -14,4 +14,4 @@
   - Email: admin@zoo.com
   - Password: 12345
 - The back-end is already connected to the hosted database so you don't have to load the dumpfile and connected it locally
-- You can also copy the information of the db config to connect it to your dbms, when connected you can see all the tables, triggers, and populated data in the zoo2 schema.
+- You can also copy the information of the db config (in the server folder > db.js > db cofig located at the top of the file) to connect it to your dbms, when connected you can see all the tables, triggers, and populated data in the zoo2 schema.
