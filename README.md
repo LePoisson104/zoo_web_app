@@ -1,4 +1,4 @@
-# team7_zoo_web_app
+# zoo_web_app
 
 - This repo contains both the front-end and back-end code for this project
 - different pages are named accordingly and the back-end is named as server
