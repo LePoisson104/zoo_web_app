@@ -1,19 +1,12 @@
 const mysql = require("mysql");
 let instance = null;
+require("dotenv").config();
 
-// local instance
-// const connection = mysql.createConnection({
-//   host: "localhost",
-//   database: "zoo",
-//   user: "root",
-//   password: "root1234",
-// });
-//AWS
 const connection = mysql.createConnection({
-  host: "zoodatabase.cymql2sd4zy7.us-east-1.rds.amazonaws.com",
-  database: "zoo",
-  user: "admin",
-  password: "Viet1042002",
+  host: process.env.HOST,
+  database: process.env.DATABASE,
+  user: process.env.USERNAME,
+  password: process.env.PASSWORD,
 });
 
 connection.connect((err) => {
